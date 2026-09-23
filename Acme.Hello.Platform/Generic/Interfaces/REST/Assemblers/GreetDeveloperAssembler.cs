@@ -7,7 +7,11 @@ public static class GreetDeveloperAssembler
 {
     public static GreetDeveloperResponse ToResponseFromEntity(Developer? entity)
     {
+
+        if (entity == null || entity.IsAnyNameEmpty())
+            return new GreetDeveloperResponse("Welcome Anonymus ASP.NET Developer");
+        
         return new GreetDeveloperResponse(entity.Id, entity.GetFullName(),
-            $"{entity.FirstName} {entity.LastName}");
+            $"Congrats {entity.GetFullName()}! You are an ASP.NET Developer");
     }
 }
