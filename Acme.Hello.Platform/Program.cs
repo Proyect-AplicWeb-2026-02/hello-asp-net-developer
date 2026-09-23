@@ -7,8 +7,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 // Configure the HTTP  pipeline.
 if (app.Environment.IsDevelopment())
@@ -33,7 +38,7 @@ app.MapPost("/greetings", (GreetDeveloperRequest? request) =>
     var developer = DeveloperAssembler.ToEntityFromRequest(request);
     var response = GreetDeveloperAssembler.ToResponseFromEntity(developer);
     return Results.Created("/greetings", response);
-}).WithName("GetGreetings").WithOpenApi();
+}).WithName("CreateGreetings").WithOpenApi();
 
 app.UseHttpsRedirection();
 app.Run();
